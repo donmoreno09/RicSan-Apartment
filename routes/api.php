@@ -2,20 +2,17 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\Api\V1\ApartmentController;
-// use App\Http\Controllers\Api\V1\AmenityController;
-// use App\Http\Controllers\Api\V1\StatisticsController;
+use App\Http\Controllers\Api\V1\ApartmentController;
+use App\Http\Controllers\Api\V1\AmenityController;
+use App\Http\Controllers\Api\V1\StatisticsController;
 
 /*
 |--------------------------------------------------------------------------
 | API Routes - Version 1
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group.
-|
-| Base URL: /api/v1
+| RESTful API endpoints for RicSan's Apartment Showcase.
+| All routes are prefixed with /api/v1
 |
 */
 
@@ -32,49 +29,34 @@ Route::prefix('v1')->group(function () {
         ]);
     });
 
-    // // Apartment Routes
-    // Route::prefix('apartments')->group(function () {
-    //     Route::get('/', [ApartmentController::class, 'index'])
-    //         ->name('api.v1.apartments.index');
+    // Apartment Routes (RESTful - using query params for filtering)
+    Route::prefix('apartments')->group(function () {
+        // GET /api/v1/apartments (with optional query params)
+        // ?status=available
+        // ?bedrooms=2&bathrooms=1
+        // ?min_price=1000&max_price=3000
+        Route::get('/', [ApartmentController::class, 'index'])
+            ->name('api.v1.apartments.index');
         
-    //     Route::get('/available', [ApartmentController::class, 'available'])
-    //         ->name('api.v1.apartments.available');
-        
-    //     Route::get('/search', [ApartmentController::class, 'search'])
-    //         ->name('api.v1.apartments.search');
-        
-    //     Route::get('/{id}', [ApartmentController::class, 'show'])
-    //         ->name('api.v1.apartments.show')
-    //         ->where('id', '[0-9]+');
-    // });
+        // GET /api/v1/apartments/{id}
+        Route::get('/{id}', [ApartmentController::class, 'show'])
+            ->name('api.v1.apartments.show')
+            ->where('id', '[0-9]+');
+    });
 
-    // // Amenity Routes
-    // Route::prefix('amenities')->group(function () {
-    //     Route::get('/', [AmenityController::class, 'index'])
-    //         ->name('api.v1.amenities.index');
+    // Amenity Routes (RESTful - using query params for grouping)
+    Route::prefix('amenities')->group(function () {
+        // GET /api/v1/amenities (with optional ?grouped=true)
+        Route::get('/', [AmenityController::class, 'index'])
+            ->name('api.v1.amenities.index');
         
-    //     Route::get('/categories', [AmenityController::class, 'categories'])
-    //         ->name('api.v1.amenities.categories');
-        
-    //     Route::get('/{id}', [AmenityController::class, 'show'])
-    //         ->name('api.v1.amenities.show')
-    //         ->where('id', '[0-9]+');
-    // });
+        // GET /api/v1/amenities/{id}
+        Route::get('/{id}', [AmenityController::class, 'show'])
+            ->name('api.v1.amenities.show')
+            ->where('id', '[0-9]+');
+    });
 
-    // // Statistics Route
-    // Route::get('/statistics', [StatisticsController::class, 'index'])
-    //     ->name('api.v1.statistics.index');
+    // Statistics Route
+    Route::get('/statistics', [StatisticsController::class, 'index'])
+        ->name('api.v1.statistics.index');
 });
-
-/*
-|--------------------------------------------------------------------------
-| Future API Versions
-|--------------------------------------------------------------------------
-|
-| When creating v2, add new route group here:
-|
-| Route::prefix('v2')->group(function () {
-|     // v2 routes...
-| });
-|
-*/
