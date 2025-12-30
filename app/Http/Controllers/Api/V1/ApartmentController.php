@@ -7,6 +7,7 @@ use App\Services\ApartmentService;
 use App\Http\Resources\ApartmentResource;
 use App\Http\Resources\ApartmentCollection;
 use App\Http\Requests\SearchApartmentRequest;
+use App\Http\Responses\ApiResponse;  
 use Illuminate\Http\JsonResponse;
 
 class ApartmentController extends Controller
@@ -30,9 +31,9 @@ class ApartmentController extends Controller
             $apartments = $this->apartmentService->getAllApartments();
         }
 
-        // Use ApartmentCollection for transforming list
-        return response()->json(
-            new ApartmentCollection($apartments)
+        return ApiResponse::success(
+            new ApartmentCollection($apartments),
+            'Apartments retrieved successfully'
         );
     }
 
@@ -46,18 +47,12 @@ class ApartmentController extends Controller
         $apartment = $this->apartmentService->getApartmentById($id);
 
         if (!$apartment) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Apartment not found',
-                'error' => 'The requested apartment does not exist.'
-            ], 404);
+            return ApiResponse::notFound('Apartment not found');
         }
 
-        // Use ApartmentResource for transforming single apartment
-        return response()->json([
-            'success' => true,
-            'message' => 'Apartment retrieved successfully',
-            'data' => new ApartmentResource($apartment)
-        ]);
+        return ApiResponse::success(
+            new ApartmentResource($apartment),
+            'Apartment retrieved successfully'
+        );
     }
 }

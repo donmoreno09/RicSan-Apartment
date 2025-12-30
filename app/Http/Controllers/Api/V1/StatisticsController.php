@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Services\ApartmentService;
 use App\Services\AmenityService;
+use App\Http\Responses\ApiResponse;  
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -62,10 +63,9 @@ class StatisticsController extends Controller
             'generated_at' => now()->toDateTimeString(),
         ];
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Statistics retrieved successfully',
-            'data' => $statistics
-        ], 200);
+        return ApiResponse::success(
+            $statistics,
+            'Statistics retrieved successfully'
+        );
     }
 }

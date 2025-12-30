@@ -382,6 +382,155 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Error Handling Tests",
+			"item": [
+				{
+					"name": "404 Errors",
+					"item": [
+						{
+							"name": "Non-Existent Apartment",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/apartments/999",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"apartments",
+										"999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Non-Existent Amenity",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/amenities/999",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"amenities",
+										"999"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Endpoint",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/invalid-endpoint",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"invalid-endpoint"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "422 Validation Errors",
+					"item": [
+						{
+							"name": "Invalid Bedrooms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/apartments?bedrooms=abc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"apartments"
+									],
+									"query": [
+										{
+											"key": "bedrooms",
+											"value": "abc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Price Range",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid Status",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "405 Method Not Allowed",
+					"item": [
+						{
+							"name": "Wrong Method (Statistics)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/v1/statistics",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"v1",
+										"statistics"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	]
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Services\AmenityService;
 use App\Http\Resources\AmenityResource;
+use App\Http\Responses\ApiResponse; 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -30,28 +31,28 @@ class AmenityController extends Controller
                 ];
             })->values();
             
-            return response()->json([
-                'success' => true,
-                'message' => 'Amenities retrieved successfully (grouped by category)',
-                'data' => $transformed,
-                'meta' => [
+            return ApiResponse::success(
+                $transformed,
+                'Amenities retrieved successfully (grouped by category)',
+                200,
+                [
                     'grouped' => true,
                     'categories' => $transformed->count()
                 ]
-            ]);
+            );
         }
 
         $amenities = $this->amenityService->getAllAmenities();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Amenities retrieved successfully',
-            'data' => AmenityResource::collection($amenities),
-            'meta' => [
+        return ApiResponse::success(
+            AmenityResource::collection($amenities),
+            'Amenities retrieved successfully',
+            200,
+            [
                 'total' => $amenities->count(),
                 'grouped' => false
             ]
-        ]);
+        );
     }
 
     /**
@@ -62,17 +63,12 @@ class AmenityController extends Controller
         $amenity = $this->amenityService->getAmenityById($id);
 
         if (!$amenity) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Amenity not found',
-                'error' => 'The requested amenity does not exist.'
-            ], 404);
+            return ApiResponse::notFound('Amenity not found');
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Amenity retrieved successfully',
-            'data' => new AmenityResource($amenity)
-        ]);
+        return ApiResponse::success(
+            new AmenityResource($amenity),
+            'Amenity retrieved successfully'
+        );
     }
 }
