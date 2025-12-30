@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Services\ApartmentService;
 use App\Http\Resources\ApartmentResource;
 use App\Http\Resources\ApartmentCollection;
+use App\Http\Requests\SearchApartmentRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
@@ -20,16 +20,9 @@ class ApartmentController extends Controller
      * 
      * GET /api/v1/apartments
      */
-    public function index(Request $request): JsonResponse
+    public function index(SearchApartmentRequest $request): JsonResponse
     {
-        $filters = $request->only([
-            'status',
-            'bedrooms',
-            'bathrooms',
-            'min_price',
-            'max_price',
-            'sort_by'
-        ]);
+        $filters = $request->validated();
 
         if (!empty($filters)) {
             $apartments = $this->apartmentService->searchApartments($filters);
