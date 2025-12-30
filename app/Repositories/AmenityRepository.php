@@ -30,7 +30,7 @@ class AmenityRepository implements AmenityRepositoryInterface
      */
     public function all(): Collection
     {
-        return $this->model->orderBy('category')->orderBy('name')->get();
+        return $this->model->withCount('apartments')->orderBy('category')->orderBy('name')->get();
     }
 
     /**
@@ -41,7 +41,7 @@ class AmenityRepository implements AmenityRepositoryInterface
      */
     public function find(int $id): ?Amenity
     {
-        return $this->model->find($id);
+        return $this->model->withCount('apartments')->find($id);
     }
 
     /**
@@ -52,9 +52,7 @@ class AmenityRepository implements AmenityRepositoryInterface
      */
     public function getByCategory(string $category): Collection
     {
-        return $this->model->category($category)
-            ->orderBy('name')
-            ->get();
+        return $this->model->withCount('apartments')->category($category)->orderBy('name')->get();
     }
 
     /**
