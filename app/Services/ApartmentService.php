@@ -72,26 +72,41 @@ class ApartmentService
      */
     public function searchApartments(array $filters): Collection
     {
-        // Text search
+        // Text search (exclusive - returns immediately)
         if (!empty($filters['query'])) {
             return $this->apartmentRepository->search($filters['query']);
         }
 
-        // Price range filter
+        // Build query with multiple filters
+        $query = Apartment::query();
+
+        // Apply status filter
+        if (!empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        } elseif (empty($filters['bedrooms']) && empty($filters['min_price']) && empty($filters['max_price'])) {
+            // Only default to available if no other filters are specified
+            $query->available();
+        }
+
+        // Apply bedroom filter
+        if (!empty($filters['bedrooms'])) {
+            $query->where('bedrooms', $filters['bedrooms']);
+        }
+
+        // Apply price range filter
         if (!empty($filters['min_price']) && !empty($filters['max_price'])) {
-            return $this->apartmentRepository->getByPriceRange(
+            $query->whereBetween('price', [
                 $filters['min_price'],
                 $filters['max_price']
-            );
+            ]);
+        } elseif (!empty($filters['min_price'])) {
+            $query->where('price', '>=', $filters['min_price']);
+        } elseif (!empty($filters['max_price'])) {
+            $query->where('price', '<=', $filters['max_price']);
         }
 
-        // Bedroom filter
-        if (!empty($filters['bedrooms'])) {
-            return $this->apartmentRepository->getByBedrooms($filters['bedrooms']);
-        }
-
-        // Default: return all available
-        return $this->getAvailableApartments();
+        return $query->with(['images', 'amenities', 'features'])
+            ->get();
     }
 
     /**

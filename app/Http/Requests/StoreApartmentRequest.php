@@ -36,7 +36,7 @@ class StoreApartmentRequest extends FormRequest
             'bedrooms' => 'required|integer|min:1|max:10',
             'bathrooms' => 'required|integer|min:1|max:10',
             'square_feet' => 'required|integer|min:100|max:10000',
-            'monthly_rent' => 'required|numeric|min:0|max:999999.99',
+            'price' => 'required|numeric|min:0|max:999999.99',
             'status' => 'required|in:available,rented',
             
             // Optional relationships
@@ -75,10 +75,10 @@ class StoreApartmentRequest extends FormRequest
             'square_feet.required' => 'Please specify the square footage.',
             'square_feet.min' => 'Square footage must be at least 100.',
             'square_feet.max' => 'Square footage cannot exceed 10,000.',
-            'monthly_rent.required' => 'Monthly rent amount is required.',
-            'monthly_rent.numeric' => 'Monthly rent must be a valid number.',
-            'monthly_rent.min' => 'Monthly rent cannot be negative.',
-            'monthly_rent.max' => 'Monthly rent cannot exceed $999,999.99.',
+            'price.required' => 'Monthly rent amount is required.',
+            'price.numeric' => 'Monthly rent must be a valid number.',
+            'price.min' => 'Monthly rent cannot be negative.',
+            'price.max' => 'Monthly rent cannot exceed $999,999.99.',
             'status.required' => 'Please specify the apartment status.',
             'status.in' => 'Status must be either "available" or "rented".',
             'amenity_ids.array' => 'Amenities must be provided as an array.',
@@ -99,7 +99,7 @@ class StoreApartmentRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'monthly_rent' => 'monthly rent',
+            'price' => 'monthly rent',
             'square_feet' => 'square footage',
             'amenity_ids' => 'amenities',
             'amenity_ids.*' => 'amenity',

@@ -49,7 +49,7 @@ class AmenityFactory extends Factory
         $name = fake()->randomElement($categories[$category]);
 
         return [
-            'name' => $name,
+            'name' => $name . ' ' . fake()->unique()->numerify('##'),
             'icon' => 'fa-' . strtolower(str_replace(' ', '-', $name)),
             'category' => $category,
         ];

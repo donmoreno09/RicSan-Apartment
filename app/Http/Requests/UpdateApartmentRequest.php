@@ -46,7 +46,7 @@ class UpdateApartmentRequest extends FormRequest
             'bedrooms' => 'sometimes|integer|min:1|max:10',
             'bathrooms' => 'sometimes|integer|min:1|max:10',
             'square_feet' => 'sometimes|integer|min:100|max:10000',
-            'monthly_rent' => 'sometimes|numeric|min:0|max:999999.99',
+            'price' => 'sometimes|numeric|min:0|max:999999.99',
             'status' => 'sometimes|in:available,rented',
             
             // Relationships (optional)
@@ -70,7 +70,7 @@ class UpdateApartmentRequest extends FormRequest
             'bedrooms.min' => 'An apartment must have at least 1 bedroom.',
             'bathrooms.min' => 'An apartment must have at least 1 bathroom.',
             'square_feet.min' => 'Square footage must be at least 100.',
-            'monthly_rent.numeric' => 'Monthly rent must be a valid number.',
+            'price.numeric' => 'Monthly rent must be a valid number.',
             'status.in' => 'Status must be either "available" or "rented".',
             'amenity_ids.*.exists' => 'One or more selected amenities do not exist.',
         ];
