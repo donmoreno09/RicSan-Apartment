@@ -3,12 +3,12 @@
  * 
  * Displays detailed information about a single apartment.
  * Uses dynamic routing to get apartment ID from URL.
+ * Styled to match the design reference.
  */
 
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/templates/MainLayout/MainLayout';
-import Button from '../../components/atoms/Button/Button';
 import Badge from '../../components/atoms/Badge/Badge';
 import { apartmentService } from '../../services';
 
@@ -18,7 +18,7 @@ const ApartmentDetailPage = () => {
   
   // State
   const [apartment, setApartment] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
   /**
@@ -61,10 +61,10 @@ const ApartmentDetailPage = () => {
   if (loading) {
     return (
       <MainLayout>
-        <div className="flex justify-center items-center py-20">
+        <div className="flex justify-center items-center py-20 min-h-screen">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[--color-gold] mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading apartment details...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#d4a574] mx-auto mb-4"></div>
+            <p className="text-[#666666]">Loading apartment details...</p>
           </div>
         </div>
       </MainLayout>
@@ -77,19 +77,36 @@ const ApartmentDetailPage = () => {
   if (error) {
     return (
       <MainLayout>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <div className="text-6xl mb-4">😞</div>
-            <h1 className="font-[family-name:--font-family-playfair] text-4xl font-bold text-[--color-charcoal] mb-4">
-              {error}
-            </h1>
-            <p className="text-gray-600 mb-8">
-              The apartment you're looking for doesn't exist or has been removed.
-            </p>
-            <Button variant="primary" onClick={handleBack}>
-              Back to Home
-            </Button>
-          </div>
+        <div className="max-w-[1400px] mx-auto px-8 py-32 text-center min-h-screen">
+          <div className="text-6xl mb-6">😞</div>
+          <h1 className="
+            font-[family-name:var(--font-family-playfair)]
+            text-4xl font-bold
+            text-[#1a1a1a]
+            mb-4
+          ">
+            {error}
+          </h1>
+          <p className="text-[#666666] mb-8 text-lg">
+            The apartment you're looking for doesn't exist or has been removed.
+          </p>
+          <button 
+            onClick={handleBack}
+            className="
+              bg-[#d4a574] text-white
+              px-10 py-4
+              border-none rounded-[2px]
+              font-semibold cursor-pointer
+              transition-all duration-300
+              uppercase tracking-wider text-[0.9rem]
+              
+              hover:bg-[#1a1a1a]
+              hover:-translate-y-0.5
+              hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]
+            "
+          >
+            Back to Home
+          </button>
         </div>
       </MainLayout>
     );
@@ -101,20 +118,28 @@ const ApartmentDetailPage = () => {
   return (
     <MainLayout>
       {/* Back Button */}
-      <div className="bg-gray-50 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Button variant="outline" size="small" onClick={handleBack}>
-            ← Back to Apartments
-          </Button>
+      <div className="bg-[#f5f1ed] py-6 mt-20">
+        <div className="max-w-[1400px] mx-auto px-8">
+          <button 
+            onClick={handleBack}
+            className="
+              text-[#1a1a1a] font-medium
+              transition-colors duration-300
+              hover:text-[#d4a574]
+              flex items-center gap-2
+            "
+          >
+            <span>←</span> Back to Apartments
+          </button>
         </div>
       </div>
       
       {/* Apartment Details */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <section className="py-16 bg-[#f5f1ed]">
+        <div className="max-w-[1400px] mx-auto px-8">
+          <div className="bg-white rounded overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.1)]">
             {/* Image Gallery */}
-            <div className="relative h-96 bg-gray-200">
+            <div className="relative h-[500px]">
               {apartment.images && apartment.images.length > 0 ? (
                 <img
                   src={apartment.images[0].image_path}
@@ -122,100 +147,106 @@ const ApartmentDetailPage = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="flex items-center justify-center h-full">
-                  <span className="text-gray-400 text-4xl">🏢</span>
+                <div className="
+                  w-full h-full
+                  bg-gradient-to-br from-purple-500 to-purple-700
+                  flex items-center justify-center
+                ">
+                  <span className="text-white/30 text-4xl font-semibold">🏢</span>
                 </div>
               )}
               
               {/* Badge on Image */}
-              <div className="absolute top-6 right-6">
+              <div className="absolute top-8 right-8">
                 <Badge status={apartment.is_available ? 'available' : 'rented'} />
               </div>
             </div>
             
             {/* Content */}
-            <div className="p-8 md:p-12">
+            <div className="p-12">
               {/* Header */}
-              <div className="mb-8">
-                <h1 className="font-[family-name:--font-family-playfair] text-4xl md:text-5xl font-bold text-[--color-charcoal] mb-4">
-                  {apartment.name}
+              <div className="mb-8 pb-8 border-b border-gray-200">
+                <h1 className="
+                  font-[family-name:var(--font-family-playfair)]
+                  text-5xl font-bold
+                  text-[#1a1a1a]
+                  mb-4
+                ">
+                  {apartment.title}
                 </h1>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-[family-name:--font-family-playfair] text-4xl font-bold text-[--color-gold]">
-                    ${apartment.price.toLocaleString()}
+                  <span className="
+                    font-[family-name:var(--font-family-playfair)]
+                    text-4xl font-bold
+                    text-[#d4a574]
+                  ">
+                    ${apartment.price.amount}
                   </span>
-                  <span className="text-gray-600 text-xl">/month</span>
+                  <span className="text-[#666666] text-xl">/month</span>
                 </div>
               </div>
               
               {/* Specifications */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 pb-8 border-b border-gray-200">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 pb-8 border-b border-gray-200">
                 <div>
                   <div className="text-3xl mb-2">🛏️</div>
-                  <div className="text-2xl font-bold text-[--color-charcoal]">{apartment.bedrooms}</div>
-                  <div className="text-gray-600">Bedrooms</div>
+                  <div className="text-2xl font-bold text-[#1a1a1a]">{apartment.specifications.bedrooms}</div>
+                  <div className="text-[#666666]">Bedrooms</div>
                 </div>
                 <div>
                   <div className="text-3xl mb-2">🚿</div>
-                  <div className="text-2xl font-bold text-[--color-charcoal]">{apartment.bathrooms}</div>
-                  <div className="text-gray-600">Bathrooms</div>
+                  <div className="text-2xl font-bold text-[#1a1a1a]">{apartment.specifications.bathrooms}</div>
+                  <div className="text-[#666666]">Bathrooms</div>
                 </div>
                 <div>
                   <div className="text-3xl mb-2">📐</div>
-                  <div className="text-2xl font-bold text-[--color-charcoal]">
-                    {apartment.square_feet.toLocaleString()}
+                  <div className="text-2xl font-bold text-[#1a1a1a]">
+                    {apartment.specifications.area_sqm}
                   </div>
-                  <div className="text-gray-600">Square Feet</div>
+                  <div className="text-[#666666]">Square Feet</div>
                 </div>
                 <div>
                   <div className="text-3xl mb-2">
                     {apartment.is_available ? '✅' : '❌'}
                   </div>
-                  <div className="text-2xl font-bold text-[--color-charcoal]">
+                  <div className="text-2xl font-bold text-[#1a1a1a]">
                     {apartment.is_available ? 'Available' : 'Rented'}
                   </div>
-                  <div className="text-gray-600">Status</div>
+                  <div className="text-[#666666]">Status</div>
                 </div>
               </div>
               
               {/* Description */}
               <div className="mb-8">
-                <h2 className="font-[family-name:--font-family-playfair] text-2xl font-bold text-[--color-charcoal] mb-4">
+                <h2 className="
+                  font-[family-name:var(--font-family-playfair)]
+                  text-2xl font-bold
+                  text-[#1a1a1a]
+                  mb-4
+                ">
                   About This Property
                 </h2>
-                <p className="text-gray-700 leading-relaxed text-lg">
+                <p className="text-[#666666] leading-relaxed text-lg">
                   {apartment.description}
                 </p>
               </div>
               
-              {/* Features */}
-              {apartment.features && apartment.features.length > 0 && (
-                <div className="mb-8">
-                  <h2 className="font-[family-name:--font-family-playfair] text-2xl font-bold text-[--color-charcoal] mb-4">
-                    Features
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {apartment.features.map((feature, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <span className="text-[--color-gold]">✓</span>
-                        <span className="text-gray-700">{feature.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-              
               {/* Amenities */}
               {apartment.amenities && apartment.amenities.length > 0 && (
                 <div className="mb-8">
-                  <h2 className="font-[family-name:--font-family-playfair] text-2xl font-bold text-[--color-charcoal] mb-4">
+                  <h2 className="
+                    font-[family-name:var(--font-family-playfair)]
+                    text-2xl font-bold
+                    text-[#1a1a1a]
+                    mb-4
+                  ">
                     Amenities
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {apartment.amenities.map((amenity) => (
                       <div key={amenity.id} className="flex items-center gap-2">
-                        <span className="text-[--color-gold]">★</span>
-                        <span className="text-gray-700">{amenity.name}</span>
+                        <span className="text-[#d4a574]">✓</span>
+                        <span className="text-[#666666]">{amenity.name}</span>
                       </div>
                     ))}
                   </div>
@@ -226,16 +257,38 @@ const ApartmentDetailPage = () => {
               <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-200">
                 {apartment.is_available ? (
                   <>
-                    <Button variant="primary" size="large" className="flex-1">
+                    <button className="
+                      flex-1
+                      bg-[#d4a574] text-white
+                      px-10 py-4
+                      border-none rounded-[2px]
+                      font-semibold cursor-pointer
+                      transition-all duration-300
+                      uppercase tracking-wider text-[0.9rem]
+                      
+                      hover:bg-[#1a1a1a]
+                      hover:-translate-y-0.5
+                    ">
                       Schedule a Tour
-                    </Button>
-                    <Button variant="secondary" size="large" className="flex-1">
+                    </button>
+                    <button className="
+                      flex-1
+                      bg-[#1a1a1a] text-white
+                      px-10 py-4
+                      border-none rounded-[2px]
+                      font-semibold cursor-pointer
+                      transition-all duration-300
+                      uppercase tracking-wider text-[0.9rem]
+                      
+                      hover:bg-[#d4a574]
+                      hover:-translate-y-0.5
+                    ">
                       Contact Agent
-                    </Button>
+                    </button>
                   </>
                 ) : (
                   <div className="text-center py-4">
-                    <p className="text-gray-600 text-lg">
+                    <p className="text-[#666666] text-lg">
                       This apartment is currently rented. Check back later for availability.
                     </p>
                   </div>

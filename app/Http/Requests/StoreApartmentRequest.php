@@ -35,7 +35,7 @@ class StoreApartmentRequest extends FormRequest
             'description' => 'required|string|min:50|max:2000',
             'bedrooms' => 'required|integer|min:1|max:10',
             'bathrooms' => 'required|integer|min:1|max:10',
-            'square_feet' => 'required|integer|min:100|max:10000',
+            'area_sqm' => 'required|integer|min:100|max:10000',
             'price' => 'required|numeric|min:0|max:999999.99',
             'status' => 'required|in:available,rented',
             
@@ -72,9 +72,9 @@ class StoreApartmentRequest extends FormRequest
             'bathrooms.required' => 'Please specify the number of bathrooms.',
             'bathrooms.min' => 'An apartment must have at least 1 bathroom.',
             'bathrooms.max' => 'Maximum 10 bathrooms allowed.',
-            'square_feet.required' => 'Please specify the square footage.',
-            'square_feet.min' => 'Square footage must be at least 100.',
-            'square_feet.max' => 'Square footage cannot exceed 10,000.',
+            'area_sqm.required' => 'Please specify the square footage.',
+            'area_sqm.min' => 'Square footage must be at least 100.',
+            'area_sqm.max' => 'Square footage cannot exceed 10,000.',
             'price.required' => 'Monthly rent amount is required.',
             'price.numeric' => 'Monthly rent must be a valid number.',
             'price.min' => 'Monthly rent cannot be negative.',
@@ -100,7 +100,7 @@ class StoreApartmentRequest extends FormRequest
     {
         return [
             'price' => 'monthly rent',
-            'square_feet' => 'square footage',
+            'area_sqm' => 'square footage',
             'amenity_ids' => 'amenities',
             'amenity_ids.*' => 'amenity',
         ];

@@ -56,7 +56,7 @@ ApartmentGrid.propTypes = {
       description: PropTypes.string.isRequired,
       bedrooms: PropTypes.number.isRequired,
       bathrooms: PropTypes.number.isRequired,
-      square_feet: PropTypes.number.isRequired,
+      area_sqm: PropTypes.number.isRequired,
       price: PropTypes.number.isRequired,
       is_available: PropTypes.bool.isRequired,
       images: PropTypes.array,

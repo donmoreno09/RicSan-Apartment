@@ -83,7 +83,7 @@ const ApartmentCard = ({ apartment }) => {
             <svg className="w-5 h-5 text-[#d4a574]" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
             </svg>
-            <span>{apartment.specifications.square_feet} sq ft</span>
+            <span>{apartment.specifications.area_sqm} sq ft</span>
           </div>
         </div>
         
@@ -137,7 +137,7 @@ ApartmentCard.propTypes = {
     name: PropTypes.string.isRequired,
     bedrooms: PropTypes.number.isRequired,
     bathrooms: PropTypes.number.isRequired,
-    square_feet: PropTypes.number.isRequired,
+    area_sqm: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     is_available: PropTypes.bool.isRequired,
     images: PropTypes.array,

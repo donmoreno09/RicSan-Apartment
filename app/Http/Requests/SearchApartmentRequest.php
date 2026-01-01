@@ -50,7 +50,7 @@ class SearchApartmentRequest extends FormRequest
             'max_sqft' => 'sometimes|integer|min:0|gte:min_sqft',
             
             // Sorting
-            'sort_by' => 'sometimes|string|in:price_asc,price_desc,bedrooms,square_feet,newest,oldest',
+            'sort_by' => 'sometimes|string|in:price_asc,price_desc,bedrooms, area_sqm,newest,oldest',
             
             // Pagination
             'per_page' => 'sometimes|integer|min:1|max:50',
@@ -79,7 +79,7 @@ class SearchApartmentRequest extends FormRequest
             'max_price.gte' => 'Maximum price must be greater than or equal to minimum price.',
             'min_sqft.integer' => 'Minimum square footage must be a valid number.',
             'max_sqft.gte' => 'Maximum square footage must be greater than or equal to minimum square footage.',
-            'sort_by.in' => 'Invalid sort option. Valid options: price_asc, price_desc, bedrooms, square_feet, newest, oldest.',
+            'sort_by.in' => 'Invalid sort option. Valid options: price_asc, price_desc, bedrooms , area_sqm, newest, oldest.',
             'per_page.max' => 'Cannot retrieve more than 50 items per page.',
         ];
     }

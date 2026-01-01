@@ -45,7 +45,7 @@ class UpdateApartmentRequest extends FormRequest
             'description' => 'sometimes|string|min:50|max:2000',
             'bedrooms' => 'sometimes|integer|min:1|max:10',
             'bathrooms' => 'sometimes|integer|min:1|max:10',
-            'square_feet' => 'sometimes|integer|min:100|max:10000',
+            'area_sqm' => 'sometimes|integer|min:100|max:10000',
             'price' => 'sometimes|numeric|min:0|max:999999.99',
             'status' => 'sometimes|in:available,rented',
             
@@ -69,7 +69,7 @@ class UpdateApartmentRequest extends FormRequest
             'description.min' => 'The description must be at least 50 characters.',
             'bedrooms.min' => 'An apartment must have at least 1 bedroom.',
             'bathrooms.min' => 'An apartment must have at least 1 bathroom.',
-            'square_feet.min' => 'Square footage must be at least 100.',
+            'area_sqm.min' => 'Square footage must be at least 100.',
             'price.numeric' => 'Monthly rent must be a valid number.',
             'status.in' => 'Status must be either "available" or "rented".',
             'amenity_ids.*.exists' => 'One or more selected amenities do not exist.',

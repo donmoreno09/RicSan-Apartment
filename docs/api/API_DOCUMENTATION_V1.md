@@ -187,7 +187,7 @@ List all apartments with optional filtering.
 | max_price | numeric | No | Maximum monthly rent |
 | min_sqft | integer | No | Minimum square footage |
 | max_sqft | integer | No | Maximum square footage |
-| sort_by | string | No | Sort: `price_asc`, `price_desc`, `bedrooms`, `square_feet`, `newest`, `oldest` |
+| sort_by | string | No | Sort: `price_asc`, `price_desc`, `bedrooms`, `area_sqm`, `newest`, `oldest` |
 | per_page | integer | No | Items per page (1-50, default: 10) |
 
 **Response:** 200 OK
@@ -205,7 +205,7 @@ List all apartments with optional filtering.
                 "specifications": {
                     "bedrooms": 3,
                     "bathrooms": 2,
-                    "square_feet": 2500
+                    "area_sqm": 2500
                 },
                 "price": {
                     "amount": 5000,
@@ -286,7 +286,7 @@ Get detailed information about a specific apartment.
         "specifications": {
             "bedrooms": 3,
             "bathrooms": 2,
-            "square_feet": 2500
+            "area_sqm": 2500
         },
         "price": {
             "amount": 5000,
@@ -620,7 +620,7 @@ curl "http://localhost:8000/api/v1/apartments?status=available&bedrooms=2&max_pr
                 "specifications": {
                     "bedrooms": 2,
                     "bathrooms": 1,
-                    "square_feet": 1200
+                    "area_sqm": 1200
                 },
                 "price": {
                     "amount": 2500,

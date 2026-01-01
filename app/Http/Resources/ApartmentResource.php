@@ -32,7 +32,7 @@ class ApartmentResource extends JsonResource
             'specifications' => [
                 'bedrooms' => $this->bedrooms,
                 'bathrooms' => $this->bathrooms,
-                'square_feet' => $this->square_feet,
+                'area_sqm' => $this->area_sqm,
             ],
             
             // Price Information (formatted as object)
