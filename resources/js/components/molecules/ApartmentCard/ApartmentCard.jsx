@@ -1,137 +1,131 @@
-/**
- * ApartmentCard Component (Molecule) - Enhanced Design
- * 
- * Updated with SVG icons and feature tags matching original reference.
- */
-
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import Badge from '../../atoms/Badge/Badge';
-import Button from '../../atoms/Button/Button';
 
 const ApartmentCard = ({ apartment }) => {
   const navigate = useNavigate();
   
-  const handleViewDetails = () => {
+  const handleClick = () => {
     navigate(`/apartments/${apartment.id}`);
   };
   
-  const imageUrl = apartment.images && apartment.images.length > 0 
-    ? apartment.images[0].image_path 
-    : 'https://via.placeholder.com/400x300?text=No+Image';
-  
-  const shortDescription = apartment.description.length > 100
-    ? apartment.description.substring(0, 100) + '...'
-    : apartment.description;
-  
-  // Extract feature tags (first 3 amenities if available)
-  const featureTags = apartment.amenities?.slice(0, 3).map(a => a.name) || [];
+  const imageUrl = apartment.images?.[0]?.image_path || null;
   
   return (
-    <div className="
-      flex flex-col
-      bg-white rounded-lg overflow-hidden
-      shadow-md hover:shadow-2xl
-      transition-all duration-500
-      hover:-translate-y-2
-      cursor-pointer
-      group
-    ">
+    <div 
+      onClick={handleClick}
+      className="
+        bg-white rounded
+        overflow-hidden
+        shadow-[0_10px_40px_rgba(0,0,0,0.1)]
+        transition-all duration-400 ease-in-out
+        cursor-pointer
+        relative
+        
+        hover:-translate-y-2.5
+        hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)]
+      "
+    >
       {/* Image Section */}
-      <div className="relative h-64 overflow-hidden bg-gray-200">
-        <img 
-          src={imageUrl} 
-          alt={apartment.name}
-          loading="lazy"
-          className="
-            w-full h-full object-cover 
-            transition-transform duration-700
-            group-hover:scale-110
-          "
-        />
-        <div className="absolute top-4 right-4">
-          <Badge status={apartment.is_available ? 'available' : 'rented'} />
-        </div>
+      <div className="relative w-full h-[300px] overflow-hidden">
+        {imageUrl ? (
+          <img 
+            src={imageUrl} 
+            alt={apartment.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="
+            w-full h-full
+            bg-gradient-to-br from-purple-500 to-purple-700
+            flex items-center justify-center
+          ">
+            <span className="text-white/30 text-xl font-semibold">
+              High-Quality Photo
+            </span>
+          </div>
+        )}
+        
+        <Badge status={apartment.is_available ? 'available' : 'rented'} />
       </div>
       
-      {/* Content Section */}
-      <div className="flex flex-col p-6 gap-4">
+      {/* Info Section */}
+      <div className="p-8">
         {/* Title */}
         <h3 className="
-          font-[family-name:--font-family-playfair] 
-          text-2xl font-bold 
-          text-[--color-primary]
+          font-[family-name:var(--font-family-playfair)]
+          text-[1.8rem] font-bold
+          mb-2 text-[#1a1a1a]
         ">
           {apartment.title}
         </h3>
         
-        {/* Specs with SVG Icons */}
-        <div className="flex gap-6 pb-4">
+        {/* Specs */}
+        <div className="flex gap-6 my-6 text-[#666666] text-[0.95rem]">
           {/* Bedrooms */}
-          <div className="flex items-center gap-2 text-gray-600">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#d4a574]" fill="currentColor" viewBox="0 0 20 20">
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
             </svg>
-            <span className="text-sm font-medium">{apartment.specifications.bedrooms} Bed</span>
+            <span>{apartment.specifications.bedrooms} Bed</span>
           </div>
           
           {/* Bathrooms */}
-          <div className="flex items-center gap-2 text-gray-600">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#d4a574]" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd"/>
             </svg>
-            <span className="text-sm font-medium">{apartment.specifications.bathrooms} Bath</span>
+            <span>{apartment.specifications.bathrooms} Bath</span>
           </div>
           
           {/* Square Feet */}
-          <div className="flex items-center gap-2 text-gray-600">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <div className="flex items-center gap-2">
+            <svg className="w-5 h-5 text-[#d4a574]" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
             </svg>
-            <span className="text-sm font-medium">{apartment.specifications.square_feet} sq ft</span>
+            <span>{apartment.specifications.square_feet} sq ft</span>
           </div>
         </div>
         
         {/* Price */}
-        <div className="
-          font-[family-name:--font-family-playfair] 
-          text-3xl font-bold 
-          text-[--color-accent]
-          mb-2
-        ">
-          ${apartment.price.amount}<span className="text-lg font-normal text-gray-600">/mo</span>
+        <div className="text-[2rem] font-bold text-[#d4a574] my-4">
+          ${apartment.price.amount}/mo
         </div>
         
         {/* Feature Tags */}
-        {featureTags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            {featureTags.map((tag, index) => (
+        {apartment.amenities && apartment.amenities.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-6">
+            {apartment.amenities.slice(0, 3).map((amenity) => (
               <span 
-                key={index}
+                key={amenity.id}
                 className="
-                  px-3 py-1.5
-                  bg-[--color-accent]/10
-                  text-[--color-accent]
-                  text-xs font-medium
+                  bg-[#f5f1ed] text-[#1a1a1a]
+                  px-4 py-[0.4rem]
                   rounded-full
-                  border border-[--color-accent]/20
+                  text-[0.85rem] font-medium
                 "
               >
-                {tag}
+                {amenity.name}
               </span>
             ))}
           </div>
         )}
         
         {/* View Details Button */}
-        <Button 
-          variant="outline" 
-          size="small"
-          onClick={handleViewDetails}
-          className="w-full"
-        >
+        <button className="
+          w-full mt-6 px-4 py-4
+          bg-[#1a1a1a] text-white
+          border-none rounded-[2px]
+          font-semibold uppercase tracking-wider
+          cursor-pointer
+          transition-all duration-300
+          text-[0.9rem]
+          
+          hover:bg-[#d4a574]
+          hover:-translate-y-0.5
+        ">
           View Details
-        </Button>
+        </button>
       </div>
     </div>
   );
@@ -141,7 +135,6 @@ ApartmentCard.propTypes = {
   apartment: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
     bedrooms: PropTypes.number.isRequired,
     bathrooms: PropTypes.number.isRequired,
     square_feet: PropTypes.number.isRequired,

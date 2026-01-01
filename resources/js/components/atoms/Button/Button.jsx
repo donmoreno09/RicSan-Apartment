@@ -1,9 +1,3 @@
-/**
- * Button Component (Atom) - Enhanced Design
- * 
- * Updated to match original reference styling.
- */
-
 import PropTypes from 'prop-types';
 
 const Button = ({ 
@@ -17,8 +11,7 @@ const Button = ({
 }) => {
   const baseClasses = `
     inline-flex items-center justify-center gap-2
-    font-semibold uppercase tracking-widest
-    rounded-sm
+    font-semibold rounded-sm
     transition-all duration-300
     focus:outline-none focus:ring-2 focus:ring-[--color-accent] focus:ring-offset-2
     disabled:opacity-50 disabled:cursor-not-allowed
@@ -34,28 +27,27 @@ const Button = ({
       active:translate-y-0
     `,
     secondary: `
-      bg-[--color-charcoal-light]
-      text-[--color-accent]
-      hover:bg-[--color-charcoal-lighter]
+      bg-[--color-primary-light]
+      text-white
+      hover:bg-[--color-accent]
       hover:shadow-lg hover:-translate-y-0.5
       active:translate-y-0
     `,
     outline: `
       bg-transparent
-      border-2 border-[--color-accent]
-      text-[--color-accent]
-      hover:bg-[--color-accent]/10 
-      hover:border-[--color-accent-light] 
-      hover:text-[--color-accent-light]
+      border-2 border-[--color-primary]
+      text-[--color-primary]
+      hover:bg-[--color-primary]
+      hover:text-white
       hover:shadow-lg hover:-translate-y-0.5
       active:translate-y-0
     `,
   };
   
   const sizeClasses = {
-    small: 'px-6 py-3 text-[0.85rem]',
-    medium: 'px-8 py-3 text-[0.85rem]',
-    large: 'px-10 py-4 text-[0.85rem]',
+    small: 'px-8 py-3 text-[0.85rem]',
+    medium: 'px-10 py-3 text-[0.9rem]',
+    large: 'px-12 py-4 text-[0.9rem]',
   };
   
   const buttonClasses = `
@@ -85,14 +77,6 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit', 'reset']),
   className: PropTypes.string,
-};
-
-Button.defaultProps = {
-  variant: 'primary',
-  size: 'medium',
-  disabled: false,
-  type: 'button',
-  className: '',
 };
 
 export default Button;

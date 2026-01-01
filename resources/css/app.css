@@ -1,81 +1,113 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+/* Import Google Fonts - EXACT from reference */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@400;500;700&display=swap');
 
 /* Import Tailwind CSS v4 */
 @import "tailwindcss";
 
-/* Custom Theme Configuration */
+/* CSS Variables - EXACT from reference */
+:root {
+    --primary: #1a1a1a;
+    --accent: #d4a574;
+    --light: #f5f1ed;
+    --white: #ffffff;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Tailwind Theme */
 @theme {
-  /* Updated Colors - Matching Original Reference */
-  --color-accent: #d4a574;           /* Warm tan/gold - primary accent */
-  --color-accent-dark: #c69565;      /* Darker tan */
-  --color-accent-light: #e2b891;     /* Lighter tan */
-  --color-primary: #1a1a1a;          /* Charcoal black */
-  --color-primary-light: #2d2d2d;    /* Lighter charcoal */
-  --color-light: #f5f1ed;            /* Cream background */
-  --color-white: #ffffff;            /* Pure white */
-  
-  /* Keep charcoal variants for compatibility */
-  --color-charcoal: #1a1a1a;
-  --color-charcoal-light: #2a2a2a;
-  --color-charcoal-lighter: #3a3a3a;
-  
-  /* Custom Fonts */
-  --font-family-playfair: "Playfair Display", serif;
-  --font-family-dmsans: "DM Sans", sans-serif;
+    --color-primary: #1a1a1a;
+    --color-accent: #d4a574;
+    --color-light: #f5f1ed;
+    --color-white: #ffffff;
+    
+    /* Backward compatibility */
+    --color-charcoal: #1a1a1a;
+    --color-gold: #d4a574;
+    
+    --font-family-playfair: "Playfair Display", serif;
+    --font-family-dmsans: "DM Sans", sans-serif;
 }
 
 /* Base Styles */
 @layer base {
-  body {
-    font-family: var(--font-family-dmsans);
-    color: var(--color-primary);
-    background-color: var(--color-light);
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-playfair);
-    font-weight: 700;
-  }
+    body {
+        font-family: 'DM Sans', sans-serif;
+        background: #f5f1ed;
+        color: #1a1a1a;
+        overflow-x: hidden;
+    }
 }
 
-/* Custom Utilities for Design Elements */
+/* Custom Utilities */
 @layer utilities {
-  .backdrop-blur-10 {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  
-  .text-shadow {
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  }
+    /* Backdrop blur for nav */
+    .backdrop-blur-10 {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* Card animation - start hidden */
+    .card-animate {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+    }
+    
+    .card-animate.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Custom Animations */
+/* Animations - EXACT from reference */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+    0%, 100% { 
+        transform: translateX(-50%) translateY(0); 
+    }
+    50% { 
+        transform: translateX(-50%) translateY(10px); 
+    }
 }
 
+/* Animation Classes */
 .animate-fadeInUp {
-  animation: fadeInUp 1s ease-out;
+    animation: fadeInUp 1s ease-out;
 }
 
-.animate-bounce {
-  animation: bounce 2s infinite;
+.animate-fadeInUp-delayed-1 {
+    animation: fadeInUp 1s ease-out 0.2s backwards;
+}
+
+.animate-fadeInUp-delayed-2 {
+    animation: fadeInUp 1s ease-out 0.4s backwards;
+}
+
+.animate-fadeInUp-delayed-3 {
+    animation: fadeInUp 1s ease-out 0.6s backwards;
+}
+
+.animate-bounce-slow {
+    animation: bounce 2s infinite;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero-title-mobile {
+        font-size: 3rem !important;
+    }
+    
+    .hero-subtitle-mobile {
+        font-size: 1rem !important;
+    }
 }
