@@ -1,18 +1,24 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 /* Import Tailwind CSS v4 */
 @import "tailwindcss";
 
 /* Custom Theme Configuration */
 @theme {
-  /* Custom Colors - Luxury Palette */
-  --color-gold: #D4AF37;
-  --color-gold-dark: #C5A028;
-  --color-gold-light: #E5C158;
-  --color-charcoal: #1A1A1A;
-  --color-charcoal-light: #2A2A2A;
-  --color-charcoal-lighter: #3A3A3A;
+  /* Updated Colors - Matching Original Reference */
+  --color-accent: #d4a574;           /* Warm tan/gold - primary accent */
+  --color-accent-dark: #c69565;      /* Darker tan */
+  --color-accent-light: #e2b891;     /* Lighter tan */
+  --color-primary: #1a1a1a;          /* Charcoal black */
+  --color-primary-light: #2d2d2d;    /* Lighter charcoal */
+  --color-light: #f5f1ed;            /* Cream background */
+  --color-white: #ffffff;            /* Pure white */
+  
+  /* Keep charcoal variants for compatibility */
+  --color-charcoal: #1a1a1a;
+  --color-charcoal-light: #2a2a2a;
+  --color-charcoal-lighter: #3a3a3a;
   
   /* Custom Fonts */
   --font-family-playfair: "Playfair Display", serif;
@@ -23,12 +29,53 @@
 @layer base {
   body {
     font-family: var(--font-family-dmsans);
-    color: var(--color-charcoal);
-    background-color: #F9FAFB;
+    color: var(--color-primary);
+    background-color: var(--color-light);
   }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-family-playfair);
     font-weight: 700;
   }
+}
+
+/* Custom Utilities for Design Elements */
+@layer utilities {
+  .backdrop-blur-10 {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Custom Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease-out;
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
 }

@@ -1,17 +1,17 @@
 /**
- * Header Component (Organism)
+ * Header Component (Organism) - Enhanced Design
  * 
- * Main navigation header with logo and responsive menu.
- * Combines multiple atoms/molecules into site header.
+ * Frosted glass navigation with backdrop blur matching design reference.
  */
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '../../atoms/Button/Button';
 
 const Header = ({ className = '' }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
   
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -20,35 +20,66 @@ const Header = ({ className = '' }) => {
   const navLinks = [
     { path: '/', label: 'Home' },
     { path: '/apartments', label: 'Apartments' },
-    { path: '/about', label: 'About' },
+    { path: '/amenities', label: 'Amenities' },
     { path: '/contact', label: 'Contact' },
   ];
   
+  const isActive = (path) => location.pathname === path;
+  
   return (
-    <header className={`bg-white shadow-md sticky top-0 z-50 ${className}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+    <header className={`
+      fixed top-0 left-0 right-0 z-50
+      bg-white/95 backdrop-blur-10
+      border-b border-[--color-accent]/10
+      transition-all duration-300
+      ${className}
+    `}>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-24">
           {/* Logo */}
           <Link 
             to="/" 
-            className="flex items-center gap-2 font-[family-name:--font-family-playfair] text-2xl font-bold text-[--color-charcoal] hover:text-[--color-gold] transition-colors"
+            className="
+              font-[family-name:--font-family-playfair] 
+              text-[1.8rem] font-bold 
+              text-[--color-primary]
+              tracking-tight
+              hover:text-[--color-accent]
+              transition-colors duration-300
+            "
           >
-            <span className="text-[--color-gold]">🏢</span>
             RicSan's Apartments
           </Link>
           
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-12">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-[--color-charcoal] hover:text-[--color-gold] font-medium transition-colors duration-200"
+                className={`
+                  relative
+                  font-medium text-[0.95rem]
+                  transition-colors duration-300
+                  ${isActive(link.path) 
+                    ? 'text-[--color-accent]' 
+                    : 'text-[--color-primary] hover:text-[--color-accent]'
+                  }
+                  after:content-[''] 
+                  after:absolute 
+                  after:bottom-[-5px] 
+                  after:left-0 
+                  after:h-[2px] 
+                  after:bg-[--color-accent]
+                  after:transition-all
+                  after:duration-300
+                  ${isActive(link.path) ? 'after:w-full' : 'after:w-0 hover:after:w-full'}
+                `}
               >
                 {link.label}
               </Link>
             ))}
-            <Button variant="primary" size="small">
+            <Button variant="primary" size="small" className="uppercase tracking-wider">
               Schedule Tour
             </Button>
           </nav>
@@ -56,16 +87,19 @@ const Header = ({ className = '' }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="
+              md:hidden 
+              p-2 rounded-lg 
+              hover:bg-black/5 
+              transition-colors
+            "
             aria-label="Toggle mobile menu"
           >
             {mobileMenuOpen ? (
-              // Close icon
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              // Hamburger icon
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
@@ -75,19 +109,26 @@ const Header = ({ className = '' }) => {
         
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-gray-200">
+          <nav className="md:hidden py-6 border-t border-[--color-accent]/10">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-[--color-charcoal] hover:text-[--color-gold] font-medium py-2 transition-colors"
+                  className={`
+                    font-medium py-2
+                    transition-colors duration-300
+                    ${isActive(link.path) 
+                      ? 'text-[--color-accent]' 
+                      : 'text-[--color-primary] hover:text-[--color-accent]'
+                    }
+                  `}
                 >
                   {link.label}
                 </Link>
               ))}
-              <Button variant="primary" size="small" className="w-full">
+              <Button variant="primary" size="small" className="w-full uppercase tracking-wider">
                 Schedule Tour
               </Button>
             </div>
