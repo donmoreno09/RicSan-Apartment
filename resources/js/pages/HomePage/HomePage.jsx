@@ -1,31 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import MainLayout from '../../components/templates/MainLayout/MainLayout';
 import ApartmentCard from '../../components/molecules/ApartmentCard/ApartmentCard';
-import { apartmentService } from '../../services';
+import useApartments from '../../hooks/useApartments';
 
 const HomePage = () => {
-  const [apartments, setApartments] = useState([]);
-  const [loading, setLoading] = useState(true);
   const cardsRef = useRef([]);
   
-  // Fetch apartments
-  useEffect(() => {
-    const fetchApartments = async () => {
-      try {
-        setLoading(true);
-        const response = await apartmentService.getAll();
-        setApartments(response.data.data);
-      } catch (err) {
-        console.error('Error:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchApartments();
-  }, []);
+  // Use custom hook instead of local state
+  const { apartments, loading, error } = useApartments();
   
-  // Scroll animation - EXACT from reference
+  // Scroll animation
   useEffect(() => {
     if (apartments.length === 0) return;
     

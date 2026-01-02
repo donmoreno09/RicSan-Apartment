@@ -6,51 +6,18 @@
  * Styled to match the design reference.
  */
 
-import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import MainLayout from '../../components/templates/MainLayout/MainLayout';
 import Badge from '../../components/atoms/Badge/Badge';
-import { apartmentService } from '../../services';
+import useApartmentDetail from '../../hooks/useApartmentDetail';
 
 const ApartmentDetailPage = () => {
-  const { id } = useParams(); // Get apartment ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
   
-  // State
-  const [apartment, setApartment] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Use custom hook instead of local state/useEffect
+  const { apartment, loading, error } = useApartmentDetail(id);
   
-  /**
-   * Fetch apartment details when ID changes
-   */
-  useEffect(() => {
-    const fetchApartment = async () => {
-      try {
-        setLoading(true);
-        const response = await apartmentService.getById(id);
-        setApartment(response.data);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching apartment:', err);
-        
-        // Check if it's a 404
-        if (err.response && err.response.status === 404) {
-          setError('Apartment not found');
-        } else {
-          setError('Failed to load apartment details');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchApartment();
-  }, [id]); // Re-run when ID changes
-  
-  /**
-   * Handle back button
-   */
   const handleBack = () => {
     navigate('/');
   };
