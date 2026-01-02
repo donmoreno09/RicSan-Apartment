@@ -111,3 +111,21 @@
         font-size: 1rem !important;
     }
 }
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid #d4a574;
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
