@@ -1,8 +1,7 @@
 /**
- * useSearch Hook
+ * useSearch Hook (Updated with Sorting)
  * 
- * Custom hook for search and filter logic.
- * Filters apartments based on search term and criteria.
+ * Custom hook for search, filter, and sort logic.
  */
 
 import { useState, useMemo } from 'react';
@@ -16,17 +15,17 @@ const useSearch = () => {
     bedrooms: '',
     minPrice: '',
     maxPrice: '',
-    availableOnly: false,
+    availableOnly: '',
+    sortBy: 'newest',
   });
   
   /**
-   * Filter apartments based on search and filters
-   * Uses useMemo for performance (only recalculates when dependencies change)
+   * Filter and sort apartments
    */
   const filteredApartments = useMemo(() => {
     let result = [...apartments];
     
-    // Search by title/description
+    // Apply search filter
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
       result = result.filter(apt => 
@@ -37,9 +36,14 @@ const useSearch = () => {
     
     // Filter by bedrooms
     if (filters.bedrooms) {
-      result = result.filter(apt => 
-        apt.specifications.bedrooms === parseInt(filters.bedrooms)
-      );
+      const bedroomCount = parseInt(filters.bedrooms);
+      result = result.filter(apt => {
+        if (bedroomCount === 4) {
+          // 4+ bedrooms
+          return apt.specifications.bedrooms >= 4;
+        }
+        return apt.specifications.bedrooms === bedroomCount;
+      });
     }
     
     // Filter by min price
@@ -56,9 +60,31 @@ const useSearch = () => {
       );
     }
     
-    // Filter available only
-    if (filters.availableOnly) {
-      result = result.filter(apt => apt.is_available);
+    // Filter by availability
+    if (filters.availableOnly === 'true') {
+      result = result.filter(apt => apt.is_available === true);
+    } else if (filters.availableOnly === 'false') {
+      result = result.filter(apt => apt.is_available === false);
+    }
+    
+    // Apply sorting
+    switch (filters.sortBy) {
+      case 'price_asc':
+        result.sort((a, b) => a.price.amount - b.price.amount);
+        break;
+      case 'price_desc':
+        result.sort((a, b) => b.price.amount - a.price.amount);
+        break;
+      case 'bedrooms_desc':
+        result.sort((a, b) => 
+          b.specifications.bedrooms - a.specifications.bedrooms
+        );
+        break;
+      case 'newest':
+      default:
+        // Assuming newer apartments have higher IDs
+        result.sort((a, b) => b.id - a.id);
+        break;
     }
     
     return result;
@@ -82,7 +108,24 @@ const useSearch = () => {
   };
   
   /**
-   * Clear all filters
+   * Remove single filter
+   */
+  const removeFilter = (key) => {
+    setFilters(prev => ({
+      ...prev,
+      [key]: ''
+    }));
+  };
+  
+  /**
+   * Clear search only
+   */
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
+  
+  /**
+   * Clear all filters and search
    */
   const clearFilters = () => {
     setSearchTerm('');
@@ -90,9 +133,23 @@ const useSearch = () => {
       bedrooms: '',
       minPrice: '',
       maxPrice: '',
-      availableOnly: false,
+      availableOnly: '',
+      sortBy: 'newest',
     });
   };
+  
+  /**
+   * Count active filters (excluding sort)
+   */
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (searchTerm) count++;
+    if (filters.bedrooms) count++;
+    if (filters.minPrice) count++;
+    if (filters.maxPrice) count++;
+    if (filters.availableOnly) count++;
+    return count;
+  }, [searchTerm, filters]);
   
   return {
     searchTerm,
@@ -100,8 +157,11 @@ const useSearch = () => {
     filteredApartments,
     search,
     updateFilter,
+    removeFilter,
+    clearSearch,
     clearFilters,
-    hasActiveFilters: searchTerm || Object.values(filters).some(v => v),
+    activeFilterCount,
+    hasActiveFilters: activeFilterCount > 0,
   };
 };
 
