@@ -9,7 +9,7 @@ const ApartmentCard = ({ apartment }) => {
     navigate(`/apartments/${apartment.id}`);
   };
   
-  const imageUrl = apartment.images?.[0]?.image_path || null;
+  const imageUrl = apartment.primary_image?.url || null;
   
   return (
     <div 
@@ -134,14 +134,26 @@ const ApartmentCard = ({ apartment }) => {
 ApartmentCard.propTypes = {
   apartment: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    bedrooms: PropTypes.number.isRequired,
-    bathrooms: PropTypes.number.isRequired,
-    area_sqm: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    specifications: PropTypes.shape({
+      bedrooms: PropTypes.number.isRequired,
+      bathrooms: PropTypes.number.isRequired,
+      area_sqm: PropTypes.string.isRequired,
+    }).isRequired,
+    price: PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      currency: PropTypes.string.isRequired,
+      formatted: PropTypes.string.isRequired,
+      per: PropTypes.string.isRequired,
+    }).isRequired,
     is_available: PropTypes.bool.isRequired,
-    images: PropTypes.array,
+    primary_image: PropTypes.shape({
+      url: PropTypes.string.isRequired,
+      alt_text: PropTypes.string,
+    }),
     amenities: PropTypes.array,
+    amenity_count: PropTypes.number,
   }).isRequired,
 };
 
