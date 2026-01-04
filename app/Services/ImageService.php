@@ -103,8 +103,12 @@ class ImageService
             // Step 6: Create image record in database
             $image = Image::create([
                 'apartment_id' => $apartmentId,
-                'image_url' => $uploadResult['secure_url'],
+                'url' => $uploadResult['secure_url'],
                 'cloudinary_public_id' => $uploadResult['public_id'],
+                'width' => $uploadResult['width'] ?? null,
+                'height' => $uploadResult['height'] ?? null,
+                'format' => $uploadResult['format'] ?? null,
+                'bytes' => $uploadResult['bytes'] ?? null,
                 'alt_text' => $apartment->title . ' - Image',
                 'order' => $existingImages->count() + 1,
                 'is_primary' => $shouldBePrimary,
@@ -209,7 +213,7 @@ class ImageService
 
         try {
             $this->unsetAllPrimaryImages($image->apartment_id);
-            $image->update(['is_primary' => true]);
+            $image->update(['is_primary' => '1']);
 
             Log::info('Primary image changed', [
                 'apartment_id' => $image->apartment_id,

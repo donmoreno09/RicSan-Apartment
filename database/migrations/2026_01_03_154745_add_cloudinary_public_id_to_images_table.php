@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('images', function (Blueprint $table) {
-            $table->string('cloudinary_public_id')->nullable()->after('image_url');
+            $table->string('cloudinary_public_id')->nullable()->after('url');
         });
     }
 

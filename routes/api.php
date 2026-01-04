@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\ApartmentController;
 use App\Http\Controllers\Api\V1\AmenityController;
 use App\Http\Controllers\Api\V1\StatisticsController;
+use App\Http\Controllers\Api\V1\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +33,6 @@ Route::prefix('v1')->group(function () {
     // Apartment Routes (RESTful - using query params for filtering)
     Route::prefix('apartments')->group(function () {
         // GET /api/v1/apartments (with optional query params)
-        // ?status=available
-        // ?bedrooms=2&bathrooms=1
-        // ?min_price=1000&max_price=3000
         Route::get('/', [ApartmentController::class, 'index'])
             ->name('api.v1.apartments.index');
         
@@ -59,4 +57,23 @@ Route::prefix('v1')->group(function () {
     // Statistics Route
     Route::get('/statistics', [StatisticsController::class, 'index'])
         ->name('api.v1.statistics.index');
+    
+    // Image Management Routes
+    Route::prefix('images')->group(function () {
+        // DELETE /api/v1/images/{id}
+        Route::delete('/{id}', [ImageController::class, 'destroy'])
+            ->name('api.v1.images.destroy')
+            ->where('id', '[0-9]+');
+        
+        // PATCH /api/v1/images/{id}/primary
+        Route::patch('/{id}/primary', [ImageController::class, 'setPrimary'])
+            ->name('api.v1.images.setPrimary')
+            ->where('id', '[0-9]+');
+    });
+    
+    // Upload image to apartment (nested under apartments)
+    Route::post('apartments/{id}/images', [ImageController::class, 'store'])
+        ->name('api.v1.apartments.images.store')
+        ->where('id', '[0-9]+');
+    
 });

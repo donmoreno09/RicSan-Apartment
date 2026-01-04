@@ -41,11 +41,15 @@ class Image extends Model
      */
     protected $fillable = [
         'apartment_id',
-        'url',
+        'url', 
         'cloudinary_public_id',
+        'width',
+        'height',
+        'format',
+        'bytes',
         'alt_text',
-        'is_primary',
         'order',
+        'is_primary',
     ];
 
     /**
