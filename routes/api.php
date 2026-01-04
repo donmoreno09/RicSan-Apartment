@@ -40,6 +40,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/{id}', [ApartmentController::class, 'show'])
             ->name('api.v1.apartments.show')
             ->where('id', '[0-9]+');
+ 
+        // POST /api/v1/apartments/{id}/images: Upload image to apartment
+        Route::post('/{id}/images', [ImageController::class, 'store'])
+            ->name('api.v1.apartments.images.store')
+            ->where('id', '[0-9]+');
     });
 
     // Amenity Routes (RESTful - using query params for grouping)
@@ -69,11 +74,5 @@ Route::prefix('v1')->group(function () {
         Route::patch('/{id}/primary', [ImageController::class, 'setPrimary'])
             ->name('api.v1.images.setPrimary')
             ->where('id', '[0-9]+');
-    });
-    
-    // Upload image to apartment (nested under apartments)
-    Route::post('apartments/{id}/images', [ImageController::class, 'store'])
-        ->name('api.v1.apartments.images.store')
-        ->where('id', '[0-9]+');
-    
+    });    
 });
