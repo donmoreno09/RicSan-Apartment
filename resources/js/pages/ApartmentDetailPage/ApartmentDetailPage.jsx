@@ -109,8 +109,8 @@ const ApartmentDetailPage = () => {
             <div className="relative h-[500px]">
               {apartment.images && apartment.images.length > 0 ? (
                 <img
-                  src={apartment.images[0].image_path}
-                  alt={apartment.name}
+                  src={apartment.primary_image?.url || null}
+                  alt={apartment.title}
                   className="w-full h-full object-cover"
                 />
               ) : (
