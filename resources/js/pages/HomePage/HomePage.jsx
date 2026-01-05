@@ -3,6 +3,7 @@ import MainLayout from '../../components/templates/MainLayout/MainLayout';
 import ApartmentCard from '../../components/molecules/ApartmentCard/ApartmentCard';
 import FilterPanel from '../../components/organisms/FilterPanel/FilterPanel';
 import HeroSection from '../../components/organisms/HeroSection/HeroSection';
+import AmenitiesSection from '../../components/organisms/AmenitiesSection/AmenitiesSection';
 import ActiveFilters from '../../components/molecules/ActiveFilters/ActiveFilters';
 import useApartments from '../../hooks/useApartments';
 import useSearch from '../../hooks/useSearch';
@@ -168,77 +169,8 @@ const HomePage = () => {
         )}
       </section>
       
-      {/* Features Section */}
-      <section className="
-        bg-[#1a1a1a] text-white
-        py-32 px-8
-        relative overflow-hidden
-      ">
-        <div 
-          className="absolute top-0 left-0 w-full h-full pointer-events-none"
-          style={{
-            backgroundImage: 'repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(212, 165, 116, 0.03) 50px, rgba(212, 165, 116, 0.03) 100px)'
-          }}
-        ></div>
-        
-        <div className="max-w-[1400px] mx-auto relative z-[1]">
-          <div className="text-center mb-16">
-            <h2 className="
-              font-[family-name:var(--font-family-playfair)]
-              text-[3.5rem] font-bold
-              mb-4
-            ">
-              Premium Amenities
-            </h2>
-            <p className="text-white/70 text-[1.1rem]">
-              Experience elevated urban living with world-class facilities
-            </p>
-          </div>
-          
-          <div className="grid gap-16 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                title: 'Prime Location',
-                desc: 'Situated in the heart of the city with easy access to shopping, dining, and entertainment venues.'
-              },
-              {
-                title: '24/7 Concierge',
-                desc: 'Professional concierge service available around the clock to assist with all your needs.'
-              },
-              {
-                title: 'Fitness Center',
-                desc: 'State-of-the-art gym with modern equipment, yoga studio, and personal training services.'
-              },
-              {
-                title: 'Secure Parking',
-                desc: 'Underground parking with 24/7 security surveillance and EV charging stations.'
-              }
-            ].map((feature, index) => (
-              <div key={index} className="text-center group">
-                <div className="
-                  w-20 h-20 mx-auto mb-8
-                  bg-[#d4a574] rounded-full
-                  flex items-center justify-center
-                  transition-all duration-300
-                  group-hover:scale-110 group-hover:rotate-[5deg]
-                ">
-                  <div className="w-10 h-10"></div>
-                </div>
-                <h3 className="
-                  font-[family-name:var(--font-family-playfair)]
-                  text-2xl font-bold
-                  mb-4
-                ">
-                  {feature.title}
-                </h3>
-                <p className="text-white/70 leading-relaxed">
-                  {feature.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Amenities Section */}
+      <AmenitiesSection />  
     </MainLayout>
   );
 };
