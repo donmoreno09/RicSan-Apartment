@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import MainLayout from '../../components/templates/MainLayout/MainLayout';
 import ApartmentCard from '../../components/molecules/ApartmentCard/ApartmentCard';
 import FilterPanel from '../../components/organisms/FilterPanel/FilterPanel';
+import HeroSection from '../../components/organisms/HeroSection/HeroSection';
 import ActiveFilters from '../../components/molecules/ActiveFilters/ActiveFilters';
 import useApartments from '../../hooks/useApartments';
 import useSearch from '../../hooks/useSearch';
@@ -57,83 +58,11 @@ const HomePage = () => {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="
-        h-screen relative
-        flex items-center justify-center
-        overflow-hidden
-        mt-20
-      ">
-        <div className="
-          absolute top-0 left-0 w-full h-full
-          bg-gradient-to-br from-[#1a1a1a] to-[#2d2d2d]
-          z-0
-        "></div>
-        
-        <div 
-          className="absolute top-0 left-0 w-full h-full opacity-[0.03] z-0"
-          style={{
-            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(212, 165, 116, 0.5) 35px, rgba(212, 165, 116, 0.5) 70px)'
-          }}
-        ></div>
-        
-        <div className="
-          relative z-[2]
-          text-center text-white
-          max-w-[1000px] px-8
-          animate-fadeInUp
-        ">
-          <h1 className="
-            font-[family-name:var(--font-family-playfair)]
-            text-[6rem] md:text-[6rem] hero-title-mobile
-            font-black leading-[1.1]
-            mb-6 tracking-[-2px]
-            animate-fadeInUp-delayed-1
-          ">
-            Luxury Living<br/>Redefined
-          </h1>
-          
-          <p className="
-            text-[1.3rem] hero-subtitle-mobile
-            font-light
-            text-white/80
-            mb-12 tracking-[2px]
-            uppercase
-            animate-fadeInUp-delayed-2
-          ">
-            Discover Your Perfect Urban Sanctuary
-          </p>
-          
-          <div className="animate-fadeInUp-delayed-3">
-            <button 
-              onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-              className="
-                bg-[#d4a574] text-white
-                px-12 py-4
-                border-none rounded-[2px]
-                font-semibold cursor-pointer
-                transition-all duration-300
-                uppercase tracking-wider text-base
-                
-                hover:bg-[#1a1a1a]
-                hover:-translate-y-0.5
-                hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]
-              "
-            >
-              Explore Apartments
-            </button>
-          </div>
-        </div>
-        
-        <div className="
-          absolute bottom-12 left-1/2
-          -translate-x-1/2
-          text-white text-[0.85rem]
-          tracking-[2px] uppercase
-          animate-bounce-slow
-        ">
-          Scroll Down ↓
-        </div>
-      </section>
+      <HeroSection 
+        title="Luxury Living<br/>Redefined"
+        subtitle="Discover Your Perfect Urban Sanctuary"
+        ctaText="Explore Apartments"
+      />
       
       {/* Apartments Section */}
       <section className="max-w-[1400px] mx-auto px-8 py-32 bg-[#f5f1ed]">
