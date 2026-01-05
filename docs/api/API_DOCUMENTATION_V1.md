@@ -526,6 +526,111 @@ Get dashboard statistics about apartments and amenities.
 curl http://localhost:8000/api/v1/statistics
 ```
 
+## Image Management Endpoints
+
+### Upload Image to Apartment
+
+Upload an image to a specific apartment. Image is stored in Cloudinary and URL saved to database.
+
+**Endpoint:** `POST /api/v1/apartments/{id}/images`
+
+**Request:**
+```http
+POST /api/v1/apartments/1/images HTTP/1.1
+Content-Type: multipart/form-data
+
+image: [binary file data]
+is_primary: 1
+```
+
+**Request Parameters:**
+- `image` (required, file) - Image file (JPEG, PNG, WEBP), max 2MB
+- `is_primary` (optional, string) - '0' or '1', whether this is the featured image
+
+**Success Response (201 Created):**
+```json
+{
+  "success": true,
+  "message": "Image uploaded successfully",
+  "data": {
+    "id": 32,
+    "apartment_id": 1,
+    "url": "https://res.cloudinary.com/db0bm6keb/image/upload/v1767501711/apartments/apartment-1-1767501711-1f0a7c.jpg",
+    "cloudinary_public_id": "apartments/apartment-1-1767501711-1f0a7c",
+    "width": 800,
+    "height": 600,
+    "format": "jpg",
+    "bytes": 45000,
+    "alt_text": "Luxury Penthouse - Image",
+    "order": 6,
+    "is_primary": true,
+    "created_at": "2026-01-04T04:41:52.000000Z",
+    "updated_at": "2026-01-04T04:41:52.000000Z"
+  }
+}
+```
+
+**Error Response (422 Validation Error):**
+```json
+{
+  "message": "The image must be a file of type: jpeg, png, jpg, webp.",
+  "errors": {
+    "image": ["The image must be a file of type: jpeg, png, jpg, webp."]
+  }
+}
+```
+
+---
+
+### Delete Image
+
+Delete an image from both Cloudinary and database.
+
+**Endpoint:** `DELETE /api/v1/images/{id}`
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Image deleted successfully"
+}
+```
+
+**Error Response (404 Not Found):**
+```json
+{
+  "success": false,
+  "message": "Image with ID 999 not found"
+}
+```
+
+---
+
+### Set Image as Primary
+
+Set a specific image as the primary/featured image for its apartment.
+
+**Endpoint:** `PATCH /api/v1/images/{id}/primary`
+
+**Success Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Primary image updated successfully",
+  "data": {
+    "id": 32,
+    "apartment_id": 1,
+    "url": "https://res.cloudinary.com/...",
+    "is_primary": true,
+    ...
+  }
+}
+```
+
+**Notes:**
+- Automatically unsets other images as primary for that apartment
+- Only one primary image per apartment
+
 ---
 
 ## ❌ Error Handling
