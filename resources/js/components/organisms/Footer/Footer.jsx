@@ -1,8 +1,26 @@
+/**
+ * Footer Component (Organism)
+ * 
+ * Main footer with contact information and site navigation.
+ * Includes smooth scroll to top functionality.
+ */
+
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Footer = ({ className = '' }) => {
   const currentYear = new Date().getFullYear();
+  
+  /**
+   * Scroll to top of page
+   * Uses native Smooth Scroll API
+   */
+  const scrollToTop = () => {
+    window.scrollTo({ 
+      top: 0, 
+      behavior: 'smooth' 
+    });
+  };
   
   return (
     <footer className={`bg-[#1a1a1a] text-white py-16 px-8 border-t border-[#d4a574]/20 ${className}`}>
@@ -33,20 +51,27 @@ const Footer = ({ className = '' }) => {
               Quick Links
             </h3>
             <ul className="space-y-3 list-none">
-              {[
-                { path: '/apartments', label: 'Available Apartments' },
-                { path: '/amenities', label: 'Amenities' },
-                { path: '/contact', label: 'Contact Us' }
-              ].map(link => (
-                <li key={link.path}>
-                  <Link 
-                    to={link.path}
-                    className="text-white/70 hover:text-[#d4a574] transition-colors no-underline"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link 
+                  to="/"
+                  className="text-white/70 hover:text-[#d4a574] transition-colors no-underline"
+                >
+                  View Apartments
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={scrollToTop}
+                  className="
+                    text-white/70 hover:text-[#d4a574] 
+                    transition-colors bg-transparent 
+                    border-none cursor-pointer
+                    p-0 font-[family-name:var(--font-family-dmsans)]
+                  "
+                >
+                  Back to Top ↑
+                </button>
+              </li>
             </ul>
           </div>
           
@@ -62,8 +87,22 @@ const Footer = ({ className = '' }) => {
             <ul className="space-y-3 list-none text-white/70">
               <li>123 Urban Street</li>
               <li>City Center, ST 12345</li>
-              <li>Phone: (555) 123-4567</li>
-              <li>Email: info@ricsan.com</li>
+              <li>
+                <a 
+                  href="tel:+15551234567" 
+                  className="text-white/70 hover:text-[#d4a574] transition-colors no-underline"
+                >
+                  Phone: (555) 123-4567
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="mailto:info@ricsan.com" 
+                  className="text-white/70 hover:text-[#d4a574] transition-colors no-underline"
+                >
+                  Email: info@ricsan.com
+                </a>
+              </li>
             </ul>
           </div>
           
@@ -86,7 +125,7 @@ const Footer = ({ className = '' }) => {
         
         {/* Bottom */}
         <div className="text-center pt-8 border-t border-white/10 text-white/50">
-          <p>© {currentYear} RicSan's Apartments. All rights reserved. | Privacy Policy | Terms of Service</p>
+          <p>© {currentYear} RicSan's Apartments. All rights reserved.</p>
         </div>
       </div>
     </footer>
